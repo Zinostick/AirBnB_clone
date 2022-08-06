@@ -5,6 +5,7 @@ BaseModel Class of Models Module
 
 import os
 import json
+import models
 from uuid import uuid4, UUID
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
@@ -99,6 +100,8 @@ class BaseModel:
             updates attribute updated_at to current time
         """
         self.updated_at = datetime.utcnow()
+        models.storage.new(self)
+        models.storage.save()
 
     def to_dict(self, saving_file_storage=False):
         """
@@ -115,7 +118,7 @@ class BaseModel:
             })
         if not saving_file_storage and obj_class == 'User':
             bm_dict.pop('password', None)
-        return bm_dict
+        return(bm_dict)
 
     def __str__(self):
         """
@@ -123,3 +126,9 @@ class BaseModel:
         """
         class_name = type(self).__name__
         return '[{}] ({}) {}'.format(class_name, self.id, self.__dict__)
+
+    def delete(self):
+        """
+            deletes current instance from storage
+        """
+        models.storage.delete(self)
