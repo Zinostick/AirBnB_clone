@@ -1,153 +1,49 @@
 #!/usr/bin/python3
-"""
-Unit Test for BaseModel Class
-"""
-from datetime import datetime
-import inspect
-import json
-import models
-from os import environ, stat
-import pep8
+""" Module of Unittests """
 import unittest
-
-BaseModel = models.base_model.BaseModel
-STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
-
-
-class TestBaseModelDocs(unittest.TestCase):
-    """Class for testing BaseModel docs"""
-
-    all_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
-
-    @classmethod
-    def setUpClass(cls):
-        print('\n\n.................................')
-        print('..... Testing Documentation .....')
-        print('.....  For BaseModel Class  .....')
-        print('.................................\n\n')
-
-    def test_doc_file(self):
-        """... documentation for the file"""
-        expected = '\nBaseModel Class of Models Module\n'
-        actual = models.base_model.__doc__
-        self.assertEqual(expected, actual)
-
-    def test_doc_class(self):
-        """... documentation for the class"""
-        expected = ('\n        attributes and functions for BaseModel class\n'
-                    '    ')
-        actual = BaseModel.__doc__
-        self.assertEqual(expected, actual)
-
-    def test_all_function_docs(self):
-        """... tests for ALL DOCS for all functions in db_storage file"""
-        all_functions = TestBaseModelDocs.all_funcs
-        for function in all_functions:
-            self.assertIsNotNone(function[1].__doc__)
-
-    def test_pep8_base_model(self):
-        """... base_model.py conforms to PEP8 Style"""
-        pep8style = pep8.StyleGuide(quiet=True)
-        errors = pep8style.check_files(['models/base_model.py'])
-        self.assertEqual(errors.total_errors, 0, errors.messages)
-
-    def test_file_is_executable(self):
-        """... tests if file has correct permissions so user can execute"""
-        file_stat = stat('models/base_model.py')
-        permissions = str(oct(file_stat[0]))
-        actual = int(permissions[5:-2]) >= 5
-        self.assertTrue(actual)
+from models.base_model import BaseModel
+import os
+from models import storage
+from models.engine.file_storage import FileStorage
+import datetime
 
 
-@unittest.skipIf(STORAGE_TYPE == 'db', 'DB Storage does not store BaseModel')
-class TestBaseModelInstances(unittest.TestCase):
-    """testing for class instances"""
+class BaseModelTests(unittest.TestCase):
+    """ Suite of Console Tests """
 
-    @classmethod
-    def setUpClass(cls):
-        print('\n\n.................................')
-        print('....... Testing Functions .......')
-        print('.....  For BaseModel Class  .....')
-        print('.................................\n\n')
+    my_model = BaseModel()
 
-    def setUp(self):
-        """initializes new BaseModel instance for testing"""
-        self.model = BaseModel()
+    def testBaseModel1(self):
+        """ Test attributes value of a BaseModel instance """
 
-    def test_instantiation(self):
-        """... checks if BaseModel is properly instantiated"""
-        self.assertIsInstance(self.model, BaseModel)
+        self.my_model.name = "Holberton"
+        self.my_model.my_number = 89
+        self.my_model.save()
+        my_model_json = self.my_model.to_dict()
 
-    def test_to_string(self):
-        """... checks if BaseModel is properly casted to string"""
-        my_str = str(self.model)
-        my_list = ['BaseModel', 'id', 'created_at']
-        actual = 0
-        for sub_str in my_list:
-            if sub_str in my_str:
-                actual += 1
-        self.assertTrue(3 == actual)
+        self.assertEqual(self.my_model.name, my_model_json['name'])
+        self.assertEqual(self.my_model.my_number, my_model_json['my_number'])
+        self.assertEqual('BaseModel', my_model_json['__class__'])
+        self.assertEqual(self.my_model.id, my_model_json['id'])
 
-    def test_to_string(self):
-        """... checks if BaseModel is properly casted to string"""
-        my_str = str(self.model)
-        my_list = ['BaseModel', 'id', 'created_at']
-        actual = 0
-        for sub_str in my_list:
-            if sub_str in my_str:
-                actual += 1
-        self.assertTrue(3 == actual)
+    def testSave(self):
+        """ Checks if save method updates the public instance instance
+        attribute updated_at """
+        self.my_model.first_name = "First"
+        self.my_model.save()
 
-    def test_instantiation_no_updated(self):
-        """... should not have updated attribute"""
-        my_str = str(self.model)
-        actual = 0
-        if 'updated_at' in my_str:
-            actual += 1
-        self.assertTrue(0 == actual)
+        self.assertIsInstance(self.my_model.id, str)
+        self.assertIsInstance(self.my_model.created_at, datetime.datetime)
+        self.assertIsInstance(self.my_model.updated_at, datetime.datetime)
 
-    def test_save(self):
-        """... save function should add updated_at attribute"""
-        self.model.save()
-        actual = type(self.model.updated_at)
-        expected = type(datetime.now())
-        self.assertEqual(expected, actual)
+        first_dict = self.my_model.to_dict()
 
-    def test_to_dict(self):
-        """... to_json should return serializable dict object"""
-        my_model_json = self.model.to_dict()
-        actual = 1
-        try:
-            serialized = json.dumps(my_model_json)
-        except Exception as e:
-            actual = 0
-        self.assertTrue(1 == actual)
+        self.my_model.first_name = "Second"
+        self.my_model.save()
+        sec_dict = self.my_model.to_dict()
 
-    def test_json_class(self):
-        """... to_json should include class key with value BaseModel"""
-        my_model_json = self.model.to_dict()
-        actual = None
-        if my_model_json['__class__']:
-            actual = my_model_json['__class__']
-        expected = 'BaseModel'
-        self.assertEqual(expected, actual)
-
-    def test_name_attribute(self):
-        """... add name attribute"""
-        self.model.name = "Holberton"
-        actual = self.model.name
-        expected = "Holberton"
-        self.assertEqual(expected, actual)
-
-    def test_number_attribute(self):
-        """... add number attribute"""
-        self.model.number = 98
-        actual = self.model.number
-        self.assertTrue(98 == actual)
-
+        self.assertEqual(first_dict['created_at'], sec_dict['created_at'])
+        self.assertNotEqual(first_dict['updated_at'], sec_dict['updated_at'])
 
 if __name__ == '__main__':
-    """
-    MAIN TESTS
-    """
-    unittest.main
+    unittest.main()
