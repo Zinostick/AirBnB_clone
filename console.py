@@ -89,8 +89,8 @@ class HBNBCommand(cmd.Cmd):
         """airbnb: airbnb
         SYNOPSIS: Command changes prompt string"""
         print("                      __ ___                        ")
-        print("    _     _  _ _||\ |/  \ | _  _  _|_|_     _  _ _| ")
-        print("|_||_)\)/(_|| (_|| \|\__/ || )(_)| |_| )\)/(_|| (_| ")
+        print("    _     _  _ _||\\ |/  \\ | _  _  _|_|_     _  _ _| ")
+        print("|_||_)\\)/(_|| (_|| \\|\\__/ || )(_)| |_| )\\)/(_|| (_| ")
         print("   |                                                ")
         if HBNBCommand.prompt == '(hbnb) ':
             HBNBCommand.prompt = " /_ /_ _  /_\n/ //_// //_/ "
@@ -117,7 +117,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             float(val)
             return True
-        except:
+        except Exception as e:
             return False
 
     def __update_val(self, v):
@@ -199,12 +199,12 @@ class HBNBCommand(cmd.Cmd):
             if error:
                 return
         print('[', end='')
-        l = 0
+        i = 0
         if arg:
             storage_objs = storage.all(arg[0])
         else:
             storage_objs = storage.all()
-        l = len(storage_objs)
+        i = len(storage_objs)
         c = 0
         for v in storage_objs.values():
             c += 1
@@ -232,7 +232,7 @@ class HBNBCommand(cmd.Cmd):
         to_delete.delete()
         storage.save()
 
-    def __rremove(self, s, l):
+    def __rremove(self, s, i):
         """
         private: removes characters in the input list from input string
         """
@@ -245,9 +245,9 @@ class HBNBCommand(cmd.Cmd):
         private: checks if the arguments input has a dictionary
         """
         if '{' and '}' in arg:
-            l = arg.split('{')[1]
-            l = l.split(', ')
-            l = list(s.split(':') for s in l)
+            i = arg.split('{')[1]
+            i = l.split(', ')
+            i = list(s.split(':') for s in i)
             d = {}
             for subl in l:
                 k = subl[0].strip('"\' {}')
@@ -377,6 +377,7 @@ class HBNBCommand(cmd.Cmd):
                     v(new_arg)
                     return
         self.default(arg)
+
 
 if __name__ == '__main__':
     """
