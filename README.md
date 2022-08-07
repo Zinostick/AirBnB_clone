@@ -122,7 +122,7 @@ e6ee5344-04ef-454d-84e4-ba6fc613f1b4
 ```
 
 ## Built with :gear:
-python3 (3.4.3)
+python3 (3.10.6)
 
 ### Version :pushpin:
 HBnB - version 9.6
