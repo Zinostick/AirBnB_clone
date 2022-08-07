@@ -126,9 +126,3 @@ class BaseModel:
         """
         class_name = type(self).__name__
         return '[{}] ({}) {}'.format(class_name, self.id, self.__dict__)
-
-    def delete(self):
-        """
-            deletes current instance from storage
-        """
-        models.storage.delete(self)
