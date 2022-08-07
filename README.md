@@ -1,215 +1,134 @@
-<img src="https://github.com/jarehec/AirBnB_clone_v3/blob/master/dev/HBTN-hbnb-Final.png" width="160" height=auto />
+# AirBnB Clone
+![HBnB Logo](./image/hbnb_logo.png)
 
-# AirBnB Clone: Phase # 3
 
-: API with Swagger
+### Contents
 
-## Description
+- [Description](#Description)
+- [Environment](#Environment)
+- [Further Information](#Furtherinformation)
+- [Requirements](#Requirements)
+- [Repo Contents](#FileContents)
+- [Installation](#Installation)
+- [Usage](#Usage)
+- [Built with](#Built-with)
+- [Acknowledgements](#Acknowledgements)
 
-Project attempts to clone the the AirBnB application and website, including the
-database, storage, RESTful API, Web Framework, and Front End.  Currently the
-application is designed to run with 2 storage engine models:
+## Description :page_facing_up:
+This is the first phase of a four phase project, to create a basic clone of the AirBnB web app. In this first phase a basic console was created using the Cmd Python module, to manage the objects of the whole project, being able to implement the methods create, show, update, all, and destroy to the existing classes and subclasses.
 
-* File Storage Engine:
 
-  * `/models/engine/file_storage.py`
+## Environment :computer:
+The console was developed in Ubuntu 20.04LTS using python3 (version 3.10.6).
 
-* Database Storage Engine:
+### Further information :bookmark_tabs:
+For further information on python version, and documentation visit [python.org](https://www.python.org/).
 
-  * `/models/engine/db_storage.py`
+## Requirements :memo:
+Knowledge in python3, how to use a command line interpreter, a computer with Ubuntu 20.04, python3 and pep8 style corrector.
 
-  * To Setup the DataBase for testing and development, there are 2 setup
-  scripts that setup a database with certain privileges: `setup_mysql_test.sql`
-  & `setup_mysql_test.sql` (for more on setup, see below).
+## Repo Contents :clipboard:
+This repository constains the following files:
 
-  * The Database uses Environmental Variables for tests.  To execute tests with
-  the environmental variables prepend these declarations to the execution
-  command:
+|   **File**   |   **Description**   |
+| -------------- | --------------------- |
+|[AUTHORS](./AUTHORS) | Contains info about authors of the project |
+|[base_model.py](./models/base_model.py) | Defines BaseModel class (parent class), and methods |
+|[user.py](./models/user.py) | Defines subclass User |
+|[amenity.py](./models/amenity.py) | Defines subclass Amenity |
+|[city.py](./models/city.py)| Defines subclass City |
+|[place.py](./models/place.py)| Defines subclass Place |
+|[review.py](./models/review.py) | Defines subclass Review |
+|[state.py](./models/state.py) | Defines subclass State |
+|[file_storage.py](./models/engine/file_storage.py) | Creates new instance of class, serializes and deserializes data |
+|[console.py](./console.py) | creates object, retrieves object from file, does operations on objects, updates attributes of object and destroys object |
+|[test_base_model.py](./tests/test_models/test_base_model.py) | unittests for base_model |
+|[test_user.py](./tests/test_models/test_user.py) | unittests for user |
+|[test_amenity.py](./tests/test_models/test_amenity.py) | unittests for amenity |
+|[test_city.py](./tests/test_models/test_city.py) | unittests for city |
+|[test_place.py](./tests/test_models/test_place.py) | unittests for place |
+|[test_review.py](./tests/test_models/test_review.py) | unittests for review |
+|[test_state.py](./tests/test_models/test_state.py) | unittests for state |
+|[test_file_storage.py](./tests/test_models/test_engine/test_file_storage.py) | unittests for file_storage |
+|[test_console.py](./tests/test_console.py) | unittests for console |
 
+
+## Installation :hammer_and_wrench:
+Clone the repository and run the console.py
 ```
-$ HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd \
-HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db \
-[COMMAND HERE]
-```
-
-## Environment
-
-* __OS:__ Ubuntu 14.04 LTS
-* __language:__ Python 3.4.3
-* __web server:__ nginx/1.4.6
-* __application server:__ Flask 0.12.2, Jinja2 2.9.6
-* __web server gateway:__ gunicorn (version 19.7.1)
-* __database:__ mysql Ver 14.14 Distrib 5.7.18
-* __documentation:__ Swagger (flasgger==0.6.6)
-* __style:__
-  * __python:__ PEP 8 (v. 1.7.0)
-  * __web static:__ [W3C Validator](https://validator.w3.org/)
-  * __bash:__ ShellCheck 0.3.3
-
-<img src="https://github.com/jarehec/AirBnB_clone_v3/blob/master/dev/hbnb_step5.png" />
-
-## Configuration Files
-
-The `/config/` directory contains configuration files for `nginx` and the
-Upstart scripts.  The nginx configuration file is for the configuration file in
-the path: `/etc/nginx/sites-available/default`.  The enabled site is a sym link
-to that configuration file.  The upstart script should be saved in the path:
-`/etc/init/[FILE_NAME.conf]`.  To begin this service, execute:
-
-```
-$ sudo start airbnb.conf
-```
-This script's main task is to execute the following `gunicorn` command:
-
-```
-$ gunicorn --bind 127.0.0.1:8001 wsgi.wsgi:web_flask.app
+$ git clone https://github.com/------/AirBnB_clone.git
 ```
 
-The `gunicorn` command starts an instance of a Flask Application.
+## Usage :wrench:
 
----
+|   **Method**   |   **Description**   |
+| -------------- | --------------------- |
+|[create](./console.py) | Creates object of given class |
+|[show](./console.py) | Prints the string representation of an instance based on the class name and id |
+|[all](./console.py) | Prints all string representation of all instances based or not on the class name |
+|[update](./console.py) | Updates an instance based on the class name and id by adding or updating attribute (save the change into the JSON file) |
+|[destroy](./console.py)| Deletes an instance based on the class name and id (save the change into the JSON file) |
+|[count](./console.py)| Retrieve the number of instances of a class |
+|[help](./console.py)| Prints information about specific command |
+|[quit/ EOF](./console.py)| Exit the program |
 
-### Web Server Gateway Interface (WSGI)
-
-All integration with gunicorn occurs with `Upstart` `.conf` files.  The python
-code for the WSGI is listed in the `/wsgi/` directory.  These python files run
-the designated Flask Application.
-
-## Setup
-
-This project comes with various setup scripts to support automation, especially
-during maintanence or to scale the entire project.  The following files are the
-setupfiles along with a brief explanation:
-
-* **`dev/setup.sql`:** Drops test and dev databases, and then reinitializes
-the datbase.
-
-  * Usage: `$ cat dev/setup.sql | mysql -uroot -p`
-
-* **`setup_mysql_dev.sql`:** initialiezs dev database with mysql for testing
-
-  * Usage: `$ cat setup_mysql_dev.sql | mysql -uroot -p`
-
-* **`setup_mysql_test.sql`:** initializes test database with mysql for testing
-
-  * Usage: `$ cat setup_mysql_test.sql | mysql -uroot -p`
-
-* **`0-setup_web_static.sh`:** sets up nginx web server config file & the file
-  structure.
-
-  * Usage: `$ sudo ./0-setup_web_static.sh`
-
-* **`3-deploy_web_static.py`:** uses 2 functions from (1-pack_web_static.py &
-  2-do_deploy_web_static.py) that use the fabric3 python integration, to create
-  a `.tgz` file on local host of all the local web static fils, and then calls
-  the other function to deploy the compressed web static files.  Command must
-  be executed from the `AirBnB_clone` root directory.
-
-  * Usage: `$ fab -f 3-deploy_web_static.py deploy -i ~/.ssh/holberton -u ubuntu`
-
-## Testing
-
-### `unittest`
-
-This project uses python library, `unittest` to run tests on all python files.
-All unittests are in the `./tests` directory with the command:
-
-* File Storage Engine Model:
-
-  * `$ python3 -m unittest discover -v ./tests/`
-
-* DataBase Storage Engine Model
+###### Example No.1
 
 ```
-$ HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd \
-HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db \
-python3 -m unittest discover -v ./tests/
-```
-
----
-
-### All Tests
-
-The bash script `init_test.sh` executes all these tests for both File Storage &
-DataBase Engine Models:
-
-  * checks `pep8` style
-
-  * runs all unittests
-
-  * runs all w3c_validator tests
-
-  * cleans up all `__pycache__` directories and the storage file, `file.json`
-
-  * **Usage `init_test.sh`:**
+➜  AirBnB_clone git:(feature) ✗ ./console.py
+(hbnb) create User
+bb4f4b81-7757-460b-9263-743c9ea6fef6
+(hbnb) show User bb4f4b81-7757-460b-9263-743c9ea6fef6
+[User] (bb4f4b81-7757-460b-9263-743c9ea6fef6) {'updated_at': datetime.datetime(2019, 11, 13, 17, 7, 45, 492139), 'id': 'bb4f4b81-7757-460b-9263-743c9ea6fef6', 'created_at': datetime.datetime(2019, 11, 13, 17, 7, 45, 492106)}
+(hbnb) all User
+["[User] (bb4f4b81-7757-460b-9263-743c9ea6fef6) {'updated_at': datetime.datetime(2019, 11, 13, 17, 7, 45, 492139), 'id': 'bb4f4b81-7757-460b-9263-743c9ea6fef6', 'created_at': datetime.datetime(2019, 11, 13, 17, 7, 45, 492106)}"]
+(hbnb) update User bb4f4b81-7757-460b-9263-743c9ea6fef6 name Betty
+['User', 'bb4f4b81-7757-460b-9263-743c9ea6fef6', 'name', 'Betty']
+(hbnb) all User
+["[User] (bb4f4b81-7757-460b-9263-743c9ea6fef6) {'updated_at': datetime.datetime(2019, 11, 13, 17, 7, 45, 492139), 'id': 'bb4f4b81-7757-460b-9263-743c9ea6fef6', 'name': 'Betty', 'created_at': datetime.datetime(2019, 11, 13, 17, 7, 45, 492106)}"]
+(hbnb) destroy User bb4f4b81-7757-460b-9263-743c9ea6fef6
+(hbnb) all User
+[]
+(hbnb) show User
+** instance id missing **
+(hbnb)
 
 ```
-$ ./dev/init_test.sh
-```
 
----
-
-### CLI Interactive Tests
-
-* This project uses python library, `cmd` to run tests in an interactive command
-  line interface.  To begin tests with the CLI, run this script:
-
-#### File Storage Engine Model
+###### Example No.2
 
 ```
-$ ./console.py
+➜  AirBnB_clone git:(feature) ✗ ./console.py
+(hbnb) User.create
+*** Unknown syntax: User.create
+(hbnb) User.create()
+e6ee5344-04ef-454d-84e4-ba6fc613f1b4
+(hbnb) User.all()
+["[User] (e6ee5344-04ef-454d-84e4-ba6fc613f1b4) {'id': 'e6ee5344-04ef-454d-84e4-ba6fc613f1b4', 'updated_at': datetime.datetime(2019, 11, 13, 17, 14, 1, 963404), 'created_at': datetime.datetime(2019, 11, 13, 17, 14, 1, 963373)}"]
+(hbnb) User.show()
+** instance id missing **
+(hbnb) User.show(e6ee5344-04ef-454d-84e4-ba6fc613f1b4)
+[User] (e6ee5344-04ef-454d-84e4-ba6fc613f1b4) {'id': 'e6ee5344-04ef-454d-84e4-ba6fc613f1b4', 'updated_at': datetime.datetime(2019, 11, 13, 17, 14, 1, 963404), 'created_at': datetime.datetime(2019, 11, 13, 17, 14, 1, 963373)}
+(hbnb) User.update("e6ee5344-04ef-454d-84e4-ba6fc613f1b4", "name", "Betty")
+['User', '"e6ee5344-04ef-454d-84e4-ba6fc613f1b4"', '"name"', '"Betty"']
+(hbnb) User.all()
+['[User] (e6ee5344-04ef-454d-84e4-ba6fc613f1b4) {\'"name"\': \'"Betty"\', \'id\': \'e6ee5344-04ef-454d-84e4-ba6fc613f1b4\', \'updated_at\': datetime.datetime(2019, 11, 13, 17, 14, 1, 963404), \'created_at\': datetime.datetime(2019, 11, 13, 17, 14, 1, 963373)}']
+(hbnb) User.destroy(e6ee5344-04ef-454d-84e4-ba6fc613f1b4)
+(hbnb) User.all()
+[]
+(hbnb) quit
+➜  AirBnB_clone git:(feature) ✗
+
 ```
 
-#### To execute the CLI using the Database Storage Engine Model:
+## Built with :gear:
+python3 (3.4.3)
 
-```
-$ HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd \
-HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db \
-./console.py
-```
+### Version :pushpin:
+HBnB - version 9.6
 
-#### For a detailed description of all tests, run these commands in the CLI:
-
-```
-(hbnb) help help
-List available commands with "help" or detailed help with "help cmd".
-(hbnb) help
-
-Documented commands (type help <topic>):
-========================================
-Amenity    City  Place   State  airbnb  create   help  show
-BaseModel  EOF   Review  User   all     destroy  quit  update
-
-(hbnb) help User
-class method with .function() syntax
-        Usage: User.<command>(<id>)
-(hbnb) help create
-create: create [ARG] [PARAM 1] [PARAM 2] ...
-        ARG = Class Name
-        PARAM = <key name>=<value>
-                value syntax: "<value>"
-        SYNOPSIS: Creates a new instance of the Class from given input ARG
-                  and PARAMS. Key in PARAM = an instance attribute.
-        EXAMPLE: create City name="Chicago"
-                 City.create(name="Chicago")
-```
-
-* Tests in the CLI may also be executed with this syntax:
-
-  * **destroy:** `<class name>.destroy(<id>)`
-
-  * **update:** `<class name>.update(<id>, <attribute name>, <attribute value>)`
-
-  * **update with dictionary:** `<class name>.update(<id>,
-    <dictionary representation>)`
-
----
-
-### Continuous Integration Tests
-
-Uses [Travis-CI](https://travis-ci.org/) to run all tests on all commits to the
-github repo
-
+### Acknowledgements :raised_hands:
+To all the peers that contribuited with their knowledge
 ## Authors :black_nib:
 * __Uche Ogbonna__ - <[Kinguche2](https://github.com/Kinguche2)> | <[ucheogbonnak@gmail.com](ucheogbonnak@gmail.com)>
 *  __Osauzo Efezino__ - <[Zinostick](https://github.com/Zinostick)> | <[osauzogift@gmail.com](osauzogift@gmail.com)>
